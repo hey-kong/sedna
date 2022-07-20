@@ -116,7 +116,7 @@ delete_crds() {
 
 get_service_address() {
   local service=$1
-  local port=$(kubectl -n sedna get svc $service -ojsonpath='{.spec.ports[0].port}')
+  local port=$(kubectl -n sedna get svc $service -o jsonpath='{.spec.ports[0].port}')
 
   # <service-name>.<namespace>:<port>
   echo $service.sedna:$port
