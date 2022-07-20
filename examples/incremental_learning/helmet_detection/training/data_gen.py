@@ -17,7 +17,8 @@ import logging
 
 import numpy as np
 from PIL import Image
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 from matplotlib.colors import rgb_to_hsv, hsv_to_rgb
 
 
