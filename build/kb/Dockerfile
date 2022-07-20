@@ -14,6 +14,10 @@
 
 FROM python:3.6-slim
 
+RUN apt update \
+  && apt install -y libgl1-mesa-glx libglib2.0-0
+
+RUN pip install opencv-python~=4.4.0.44
 RUN pip install colorlog~=4.7.2
 RUN pip install PyYAML~=5.4.1
 RUN pip install fastapi~=0.63.0
