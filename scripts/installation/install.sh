@@ -28,10 +28,10 @@ set -o pipefail
 TMP_DIR=$(mktemp -d --suffix=.sedna)
 SEDNA_ROOT=${SEDNA_ROOT:-$TMP_DIR}
 
-DEFAULT_SEDNA_VERSION=v0.4.0
+DEFAULT_SEDNA_VERSION=v0.5.0
 
 
-trap "rm -rf '$TMP_DIR'" EXIT 
+trap "rm -rf '$TMP_DIR'" EXIT
 
 get_latest_version() {
   # get Sedna latest release version
@@ -94,7 +94,7 @@ prepare_install(){
 
 prepare() {
   mkdir -p ${SEDNA_ROOT}
-  
+
   # we only need build directory
   # here don't use git clone because of large vendor directory
   download_yamls
@@ -116,7 +116,7 @@ delete_crds() {
 
 get_service_address() {
   local service=$1
-  local port=$(kubectl -n sedna get svc $service -o jsonpath='{.spec.ports[0].port}')
+  local port=$(kubectl -n sedna get svc $service -ojsonpath='{.spec.ports[0].port}')
 
   # <service-name>.<namespace>:<port>
   echo $service.sedna:$port
@@ -169,7 +169,7 @@ spec:
       containers:
       - name: kb
         imagePullPolicy: IfNotPresent
-        image: kubeedge/sedna-kb:$SEDNA_VERSION
+        image: pdsl-registry.cn-shenzhen.cr.aliyuncs.com/sedna/sedna-kb:$SEDNA_VERSION
         env:
           - name: KB_URL
             value: "sqlite:///db/kb.sqlite3"
@@ -271,7 +271,7 @@ spec:
       serviceAccountName: sedna
       containers:
       - name: gm
-        image: kubeedge/sedna-gm:$SEDNA_VERSION
+        image: pdsl-registry.cn-shenzhen.cr.aliyuncs.com/sedna/sedna-gm:$SEDNA_VERSION
         command: ["sedna-gm", "--config", "/config/$config_file_name", "-v2"]
         volumeMounts:
         - name: gm-config
@@ -320,7 +320,7 @@ spec:
     spec:
       containers:
         - name: lc
-          image: kubeedge/sedna-lc:$SEDNA_VERSION
+          image: pdsl-registry.cn-shenzhen.cr.aliyuncs.com/sedna/sedna-lc:$SEDNA_VERSION
           env:
             - name: GM_ADDRESS
               value: $GM_ADDRESS
@@ -335,10 +335,10 @@ spec:
               value: /rootfs
           resources:
             requests:
-              memory: 32Mi
+              memory: 128Mi
               cpu: 100m
             limits:
-              memory: 128Mi
+              memory: 512Mi
           volumeMounts:
             - name: localcontroller
               mountPath: /rootfs
@@ -361,7 +361,7 @@ delete_lc() {
 wait_ok() {
   echo "Waiting control components to be ready..."
   kubectl -n sedna wait --for=condition=available --timeout=600s deployment/gm
-  kubectl -n sedna wait pod --for=condition=Ready --selector=sedna
+  kubectl -n sedna wait pod --for=condition=Ready --timeout=600s --selector=sedna
   kubectl -n sedna get pod
 }
 
