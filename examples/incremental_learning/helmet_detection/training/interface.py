@@ -20,7 +20,8 @@ from urllib.parse import urlparse
 import cv2
 import numpy as np
 from tqdm import tqdm
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 from data_gen import DataGen
 from validate_utils import validate

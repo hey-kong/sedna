@@ -22,7 +22,8 @@ import logging
 
 import cv2
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 from PIL import Image
 
 from yolo3_multiscale import YOLOInference
