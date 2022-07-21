@@ -16,6 +16,7 @@ import os
 
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
+import tensorflow_io
 
 from sedna.datasources import TxtDataParse
 from sedna.common.config import Context, BaseConfig

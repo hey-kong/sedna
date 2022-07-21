@@ -14,6 +14,10 @@
 
 FROM python:3.6-slim
 
+RUN pip config set global.index-url http://mirrors.aliyun.com/pypi/simple \
+  && pip config set install.trusted-host mirrors.aliyun.com \
+  && pip install -U pip
+
 RUN pip install colorlog~=4.7.2
 RUN pip install PyYAML~=5.4.1
 RUN pip install fastapi~=0.63.0

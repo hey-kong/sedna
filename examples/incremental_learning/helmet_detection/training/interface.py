@@ -22,6 +22,7 @@ import numpy as np
 from tqdm import tqdm
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
+import tensorflow_io
 
 from data_gen import DataGen
 from validate_utils import validate
