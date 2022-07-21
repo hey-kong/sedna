@@ -20,6 +20,7 @@ LABEL stage=builder
 ARG GO_LDFLAGS
 
 # install build tools
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 RUN apk update
 RUN apk add build-base bash
 
