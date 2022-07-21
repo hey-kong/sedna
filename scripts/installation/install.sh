@@ -48,7 +48,7 @@ get_latest_version() {
 }
 
 : ${SEDNA_VERSION:=$(get_latest_version)}
-SEDNA_VERSION=v${SEDNA_VERSION#v}
+SEDNA_VERSION=v0.5.0
 
 _download_yamls() {
 
@@ -177,9 +177,6 @@ spec:
         - name: kb-url
           mountPath: /db
         resources:
-          requests:
-            memory: 256Mi
-            cpu: 100m
           limits:
             memory: 512Mi
       volumes:
@@ -277,9 +274,6 @@ spec:
         - name: gm-config
           mountPath: /config
         resources:
-          requests:
-            memory: 32Mi
-            cpu: 100m
           limits:
             memory: 256Mi
       volumes:
@@ -334,9 +328,6 @@ spec:
               # the value of ROOTFS_MOUNT_DIR is same with the mount path of volume
               value: /rootfs
           resources:
-            requests:
-              memory: 128Mi
-              cpu: 100m
             limits:
               memory: 512Mi
           volumeMounts:
