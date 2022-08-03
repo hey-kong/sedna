@@ -17,7 +17,7 @@
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 IMAGE_REPO=${IMAGE_REPO:-kubeedge}
-IMAGE_TAG=${IMAGE_TAG:-v0.2.0}
+IMAGE_TAG=${IMAGE_TAG:-v0.5.0}
 
 REPO_PREFIX=${IMAGE_REPO}/sedna-storage-initializer
 IMAGE=${REPO_PREFIX}:${IMAGE_TAG}

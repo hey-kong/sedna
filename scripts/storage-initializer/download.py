@@ -23,16 +23,15 @@ import gzip
 import json
 import logging
 import mimetypes
+import minio
 import os
 import re
-import sys
-import shutil
-import tempfile
-import tarfile
-import zipfile
-
-import minio
 import requests
+import shutil
+import sys
+import tarfile
+import tempfile
+import zipfile
 from urllib.parse import urlparse
 
 _S3_PREFIX = "s3://"
@@ -306,9 +305,9 @@ def main():
 
     indirect_mark = os.getenv("INDIRECT_URL_MARK", "@")
 
-    for i in range(1, len(sys.argv)-1, 2):
+    for i in range(1, len(sys.argv) - 1, 2):
         src_uri = sys.argv[i]
-        dest_path = sys.argv[i+1]
+        dest_path = sys.argv[i + 1]
 
         LOG.info("Initializing, args: src_uri [%s] dest_path [%s]" %
                  (src_uri, dest_path))
